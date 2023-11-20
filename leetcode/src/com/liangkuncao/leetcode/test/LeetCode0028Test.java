@@ -18,4 +18,11 @@ public class LeetCode0028Test {
         int result = leetCode0028.strStr("leetcode", "leetcdd");
         assertEquals(-1, result);
     }
+
+    @Test
+    public void testKmp() {
+        LeetCode0028 leetCode0028 = new LeetCode0028();
+        int result = leetCode0028.strStrKmp("opqwabcabdefabcabbe", "abcabb");
+        assertEquals(12, result);
+    }
 }
