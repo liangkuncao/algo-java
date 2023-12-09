@@ -6,8 +6,8 @@ public class LeetCode0100 {
     /**
      * 题型：二叉树
      * 解法：DFS，递归
-     * 时间复杂度：O（N）
-     * 空间复杂度：O（二叉树的高度，最坏情况下是N）
+     * 时间复杂度：O(min(m,n))
+     * 空间复杂度：O(min(m,n))
      * @param p
      * @param q
      * @return
