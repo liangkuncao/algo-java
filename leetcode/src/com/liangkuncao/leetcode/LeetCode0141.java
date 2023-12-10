@@ -1,5 +1,7 @@
 package com.liangkuncao.leetcode;
 
+import com.liangkuncao.leetcode.common.ListNode;
+
 public class LeetCode0141 {
     public boolean hasCycle(ListNode head) {
         if (head == null) {
@@ -17,14 +19,4 @@ public class LeetCode0141 {
     }
 }
 
-
-class ListNode {
-    int val;
-    ListNode next;
-
-    ListNode(int x) {
-        val = x;
-        next = null;
-    }
-}
 
