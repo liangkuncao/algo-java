@@ -21,4 +21,25 @@ public class LeetCode0202 {
         }
         return true;
     }
+
+    public boolean isHappy_fast_slow_pointer(int n) {
+        int slow = n, fast = getSqrtSum(n);
+        while (slow != fast) {
+            slow = getSqrtSum(slow);
+            fast = getSqrtSum(getSqrtSum(fast));
+            if (fast == 1) {
+                return true;
+            }
+        }
+        return fast == 1;
+    }
+
+    private int getSqrtSum(int n) {
+        int res = 0;
+        while (n > 0) {
+            res += (n % 10) * (n % 10);
+            n /= 10;
+        }
+        return res;
+    }
 }
