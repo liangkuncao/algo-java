@@ -11,6 +11,7 @@ public class LeetCode0101 {
      * 解法：BFS、迭代
      * 时间复杂度：O（N）
      * 空间复杂度：O（N）
+     *
      * @param root
      * @return
      */
@@ -49,4 +50,34 @@ public class LeetCode0101 {
         }
         return true;
     }
+
+    /**
+     * 题型：二叉树
+     * 解法：递归
+     * 时间复杂度：O（N），N是树的节点数
+     * 空间复杂度：O（N），N是树的高度
+     * @param root
+     * @return
+     */
+    public boolean isSymmetric2(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        return isSymmetric(root.left, root.right);
+    }
+
+    private boolean isSymmetric(TreeNode left, TreeNode right) {
+        if (left == null && right == null) {
+            return true;
+        }
+        if (left == null || right == null) {
+            return false;
+        }
+        if (left.val != right.val) {
+            return false;
+        }
+        return isSymmetric(left.left, right.right)
+                && isSymmetric(left.right, right.left);
+    }
+
 }
