@@ -1,6 +1,11 @@
 package com.liangkuncao.leetcode;
 
 public class LeetCode0055 {
+    /**
+     * 解法：贪心
+     * @param nums
+     * @return
+     */
     public boolean canJump(int[] nums) {
         int n = nums.length;
         int maxPosition = 0;

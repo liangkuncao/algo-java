@@ -30,8 +30,7 @@ public class LeetCode0104 {
         if (root == null) {
             return 0;
         }
-        Queue<TreeNode> nodes = new LinkedList<>() {
-        };
+        Queue<TreeNode> nodes = new LinkedList<>();
         nodes.offer(root);
         int result = 0;
         while (!nodes.isEmpty()) {
