@@ -11,7 +11,7 @@ class LeetCode0380 {
     List<Integer> nums;
     Random random;
 
-    public RandomizedSet() {
+    public LeetCode0380() {
         this.map = new HashMap<>();
         this.nums = new ArrayList<>();
         this.random = new Random();
