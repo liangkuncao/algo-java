@@ -2,9 +2,7 @@ package com.liangkuncao.leetcode;
 
 /**
  * 题型：数组
- * 解法：
- *  1. 暴力，时间复杂度O(N*N)，空间复杂度O(1)
- *  2. 全部想乘，然后除以本身，时间复杂度O(N)，空间复杂度O(1)
+ * 解法：两次遍历数组，空间复杂度o(1),时间复杂度o(n)
  */
 public class LeetCode0238 {
     public int[] productExceptSelf(int[] nums) {
