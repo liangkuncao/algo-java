@@ -11,6 +11,7 @@ public class LeetCode0077 {
             nums[i] = i + 1;
         }
         dfs(nums, new int[k], 0, k);
+        return null;
     }
 
     private void dfs(int[] nums, int[] ints, int i, int k) {
