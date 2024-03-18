@@ -4,48 +4,44 @@ import java.util.Stack;
 
 public class LeetCode150 {
     public int evalRPN(String[] tokens) {
-        Stack<String> stack = new Stack<>();
+        Stack<Integer> stack = new Stack<>();
         for (String token : tokens) {
-            if (token.equals("+")) {
-                add(stack);
-            } else if (token.equals("-")) {
-                subtract(stack);
-            } else if (token.equals("*")) {
-                multiply(stack);
-            } else if (token.equals("/")) {
-                divide(stack);
-            } else {
-                stack.add(token);
+            switch (token) {
+                case "+" -> add(stack);
+                case "-" -> subtract(stack);
+                case "*" -> multiply(stack);
+                case "/" -> divide(stack);
+                default -> stack.add(Integer.valueOf(token));
             }
         }
-        return Integer.parseInt(stack.pop());
+        return stack.pop();
     }
 
-    private void add(Stack<String> stack) {
-        int op1 = Integer.parseInt(stack.pop());
-        int op2 = Integer.parseInt(stack.pop());
+    private void add(Stack<Integer> stack) {
+        int op1 = stack.pop();
+        int op2 = stack.pop();
         int result = op2 + op1;
-        stack.add(String.valueOf(result));
+        stack.add(result);
     }
 
-    private void subtract(Stack<String> stack) {
-        int op1 = Integer.parseInt(stack.pop());
-        int op2 = Integer.parseInt(stack.pop());
+    private void subtract(Stack<Integer> stack) {
+        int op1 = stack.pop();
+        int op2 = stack.pop();
         int result = op2 - op1;
-        stack.add(String.valueOf(result));
+        stack.add(result);
     }
 
-    private void multiply(Stack<String> stack) {
-        int op1 = Integer.parseInt(stack.pop());
-        int op2 = Integer.parseInt(stack.pop());
+    private void multiply(Stack<Integer> stack) {
+        int op1 = stack.pop();
+        int op2 = stack.pop();
         int result = op2 * op1;
-        stack.add(String.valueOf(result));
+        stack.add(result);
     }
 
-    private void divide(Stack<String> stack) {
-        int op1 = Integer.parseInt(stack.pop());
-        int op2 = Integer.parseInt(stack.pop());
+    private void divide(Stack<Integer> stack) {
+        int op1 = stack.pop();
+        int op2 = stack.pop();
         int result = op2 / op1;
-        stack.add(String.valueOf(result));
+        stack.add(result);
     }
 }
