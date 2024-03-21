@@ -5,7 +5,7 @@ import com.liangkuncao.leetcode.common.ListNode;
 public class LeetCode0092 {
     /**
      * 时间复杂度：0（N）
-     * 空间复杂度：O（1）
+     * 空间复杂度：O（right - left），因为有递归
      * @param head
      * @param left
      * @param right
@@ -51,6 +51,48 @@ public class LeetCode0092 {
         return newStart;
     }
 
+    /**
+     * 题型：单向链表
+     * 解法：模拟
+     * 时间复杂度：O（N）
+     * 空间复杂度：O（1）
+     * @param head
+     * @param left
+     * @param right
+     * @return
+     */
+    public ListNode reverseBetween2(ListNode head, int left, int right) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode pre = dummy;
+        for (int i = 0; i < left - 1; i++) {
+            pre = pre.next;
+        }
+        ListNode rightNode = pre;
+        for (int i = 0; i < right - left + 1; i++) {
+            rightNode = rightNode.next;
+        }
+        ListNode succ = rightNode.next;
+        ListNode leftNode = pre.next;
+        pre.next = null;
+        rightNode.next = null;
+        reverseLinkedList(leftNode);
+        pre.next = rightNode;
+        leftNode.next = succ;
+        return dummy.next;
+    }
+
+    private void reverseLinkedList(ListNode node) {
+        ListNode pre = null;
+        while (node != null) {
+            ListNode next = node.next;
+            node.next = pre;
+            pre = node;
+            node = next;
+        }
+    }
+
+
     public static void main(String[] args) {
         ListNode start = new ListNode(1);
         ListNode node2 = new ListNode(2);
@@ -67,7 +109,7 @@ public class LeetCode0092 {
 //            start = start.next;
 //        }
         System.out.println("----");
-        ListNode newStart = leetCode0092.reverseBetween(start, 2, 4);
+        ListNode newStart = leetCode0092.reverseBetween2(start, 2, 4);
         while (newStart != null) {
             System.out.println(newStart.val);
             newStart = newStart.next;
