@@ -76,17 +76,41 @@ public class LeetCode0082 {
         return dummy.next;
     }
 
+    public ListNode deleteDuplicates3(ListNode head) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode cur = dummy;
+        while (cur.next != null && cur.next.next != null) {
+            if (cur.next.val == cur.next.next.val) {
+                int val = cur.next.val;
+                while (cur.next != null && cur.next.val == val) {
+                    cur.next = cur.next.next;
+                }
+            } else {
+                cur = cur.next;
+            }
+        }
+        return dummy.next;
+    }
+
+
     public static void main(String[] args) {
         LeetCode0082 leetCode0082 = new LeetCode0082();
         ListNode dummy = new ListNode();
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
-        ListNode node3 = new ListNode(2);
+        ListNode node3 = new ListNode(3);
+        ListNode node4 = new ListNode(3);
+        ListNode node5 = new ListNode(4);
+        ListNode node6 = new ListNode(4);
+        ListNode node7 = new ListNode(5);
+
         dummy.next = node1;
         node1.next = node2;
         node2.next = node3;
-        leetCode0082.deleteDuplicates2(dummy.next);
-
-
+        node3.next = node4;
+        node4.next = node5;
+        node5.next = node6;
+        node6.next = node7;
+        leetCode0082.deleteDuplicates3(dummy.next);
     }
 }
