@@ -53,7 +53,7 @@ public class LeetCode0099 {
         return id;
     }
 
-    public int snakesAndLadders(int[][] board) {
+    public int snakesAndLadders2(int[][] board) {
         int n = board.length;
         boolean[] vis = new boolean[n * n + 1];
         Queue<int[]> queue = new LinkedList<int[]>();

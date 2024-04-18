@@ -43,6 +43,24 @@ public class LeetCode0133 {
     }
 
     public Node cloneGraphDfs(Node node) {
+        if (node == null) {
+            return null;
+        }
+        Map<Integer, Node> visited = new HashMap<>();
+        Node result = new Node(node.val);
+        dfs(result, node, visited);
+        return result;
+    }
 
+    private void dfs(Node result, Node node, Map<Integer, Node> visited) {
+        if (visited.containsKey(node.val)) {
+            return;
+        }
+        visited.put(result.val, result);
+        for (Node neighbor : node.neighbors) {
+            Node newNeighbor = visited.getOrDefault(neighbor.val, new Node(neighbor.val));
+            result.neighbors.add(newNeighbor);
+            dfs(newNeighbor, neighbor, visited);
+        }
     }
 }
