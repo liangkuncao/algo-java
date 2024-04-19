@@ -6,6 +6,7 @@ public class LeetCode0092 {
     /**
      * 时间复杂度：0（N）
      * 空间复杂度：O（right - left），因为有递归
+     *
      * @param head
      * @param left
      * @param right
@@ -56,6 +57,7 @@ public class LeetCode0092 {
      * 解法：模拟
      * 时间复杂度：O（N）
      * 空间复杂度：O（1）
+     *
      * @param head
      * @param left
      * @param right
@@ -92,12 +94,8 @@ public class LeetCode0092 {
         }
     }
 
-    public ListNode reverseBetween4(ListNode head, int left, int right) {
 
-    }
-
-
-        public static void main(String[] args) {
+    public static void main(String[] args) {
         ListNode start = new ListNode(1);
         ListNode node2 = new ListNode(2);
         ListNode node3 = new ListNode(3);
