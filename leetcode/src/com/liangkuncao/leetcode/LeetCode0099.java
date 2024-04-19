@@ -1,92 +1,60 @@
 package com.liangkuncao.leetcode;
 
+import com.liangkuncao.leetcode.common.TreeNode;
+
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Queue;
+import java.util.Map;
 
 public class LeetCode0099 {
-    private static final int MAX_STEP = 6;
-
-    public int snakesAndLadders(int[][] board) {
-        int end = board.length * board.length;
-        List<Integer> curPositions = new ArrayList<>();
-        boolean[] visited = new boolean[end + 1];
-        curPositions.add(1);
-        int result = 0;
-        while (true) {
-            result++;
-            List<Integer> nextPositions = new ArrayList<>();
-            for (int curPosition : curPositions) {
-                visited[curPosition] = true;
-                for (int i = 1; i <= 6; i++) {
-                    int nextPosition = curPosition + i;
-                    if (nextPosition > end) {
-                        break;
-                    }
-                    nextPosition = getFinalPosition(board, nextPosition);
-                    if (nextPosition == end) {
-                        return result;
-                    }
-                    if (!visited[nextPosition]) {
-                        nextPositions.add(nextPosition);
-                    }
-                }
-            }
-            if (nextPositions.isEmpty()) {
-                break;
-            }
-            curPositions = nextPositions;
+    public void recoverTree(TreeNode root) {
+        List<TreeNode> inOrderNodes = new ArrayList<>();
+        getNodesInOrder(root, inOrderNodes);
+        for (int i = 0; i < inOrderNodes.size(); i++) {
+            System.out.print(inOrderNodes.get(i).val);
+            System.out.print(" ");
         }
-        return -1;
+        Map<Integer, Integer> swappedNodes = getSwappedNodes(inOrderNodes);
+        System.out.println(swappedNodes);
+        fixError(root, swappedNodes);
     }
 
-    private int getFinalPosition(int[][] board, int id) {
-        int n = board.length;
-        int r = (id - 1) / n, c = (id - 1) % n;
-        if (r % 2 == 1) {
-            c = n - 1 - c;
+    private void fixError(TreeNode root, Map<Integer, Integer> swappedNodes) {
+        if (root == null || swappedNodes.isEmpty()) {
+            return;
         }
-        if (board[n - 1 - r][c] > 0) {
-            return board[n - 1 - r][c];
+        fixError(root.left, swappedNodes);
+        if (swappedNodes.containsKey(root.val)) {
+            root.val = swappedNodes.remove(root.val);
         }
-        return id;
+        fixError(root.right, swappedNodes);
     }
 
-    public int snakesAndLadders2(int[][] board) {
-        int n = board.length;
-        boolean[] vis = new boolean[n * n + 1];
-        Queue<int[]> queue = new LinkedList<int[]>();
-        queue.offer(new int[]{1, 0});
-        while (!queue.isEmpty()) {
-            int[] p = queue.poll();
-            for (int i = 1; i <= 6; ++i) {
-                int nxt = p[0] + i;
-                if (nxt > n * n) { // 超出边界
+    private Map<Integer, Integer> getSwappedNodes(List<TreeNode> nums) {
+        Map<Integer, Integer> nodes = new HashMap<>();
+        int index1 = -1, index2 = -1;
+        for (int i = 0; i < nums.size() - 1; ++i) {
+            if (nums.get(i + 1).val < nums.get(i).val) {
+                index2 = i + 1;
+                if (index1 == -1) {
+                    index1 = i;
+                } else {
                     break;
                 }
-                int[] rc = id2rc(nxt, n); // 得到下一步的行列
-                if (board[rc[0]][rc[1]] > 0) { // 存在蛇或梯子
-                    nxt = board[rc[0]][rc[1]];
-                }
-                if (nxt == n * n) { // 到达终点
-                    return p[1] + 1;
-                }
-                if (!vis[nxt]) {
-                    vis[nxt] = true;
-                    queue.offer(new int[]{nxt, p[1] + 1}); // 扩展新状态
-                }
             }
         }
-        return -1;
+        nodes.put(nums.get(index1).val, nums.get(index2).val);
+        nodes.put(nums.get(index2).val, nums.get(index1).val);
+        return nodes;
     }
 
-    public int[] id2rc(int id, int n) {
-        int r = (id - 1) / n, c = (id - 1) % n;
-        if (r % 2 == 1) {
-            c = n - 1 - c;
+    private void getNodesInOrder(TreeNode root, List<TreeNode> inOrderNodes) {
+        if (root == null) {
+            return;
         }
-        return new int[]{n - 1 - r, c};
+        getNodesInOrder(root.left, inOrderNodes);
+        inOrderNodes.add(root);
+        getNodesInOrder(root.right, inOrderNodes);
     }
-
 }
