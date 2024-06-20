@@ -13,4 +13,14 @@ public class LeetCode0226 {
         root.right = left;
         return root;
     }
+
+    public TreeNode invertTree_20240620(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        TreeNode node = root.left;
+        root.left = invertTree(root.right);
+        root.right = invertTree(node);
+        return root;
+    }
 }
