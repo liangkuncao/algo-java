@@ -14,6 +14,7 @@ public class LeetCode0104 {
      * 解决方案：递归、DFS
      * 时间复杂度：O(N)
      * 空间复杂度：O(N)
+     *
      * @param root
      * @return
      */
@@ -48,5 +49,12 @@ public class LeetCode0104 {
 
         }
         return result;
+    }
+
+    public int maxDepth3(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        return Math.max(maxDepth3(root.left), maxDepth3(root.right)) + 1;
     }
 }
