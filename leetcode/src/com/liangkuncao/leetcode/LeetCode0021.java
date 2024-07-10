@@ -16,6 +16,7 @@ public class LeetCode0021 {
      * 解法：迭代
      * 时间复杂度：O（N）
      * 空间复杂度：O（1）
+     *
      * @param list1
      * @param list2
      * @return
@@ -23,7 +24,7 @@ public class LeetCode0021 {
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         ListNode dummy = new ListNode(0);
         ListNode cur = dummy;
-        while (list1 != null&& list2 != null) {
+        while (list1 != null && list2 != null) {
             if (list1.val <= list2.val) {
                 cur.next = list1;
                 list1 = list1.next;
@@ -43,10 +44,10 @@ public class LeetCode0021 {
     }
 
     /**
-     * 题型：表
      * 解法：递归
-     * 时间复杂度：O（N）
-     * 空间复杂度：O（N）
+     * 时间复杂度：O（N + M）
+     * 空间复杂度：O（N + M）
+     *
      * @param list1
      * @param list2
      * @return
@@ -65,6 +66,35 @@ public class LeetCode0021 {
             list2.next = mergeTwoLists_recursion(list1, list2.next);
             return list2;
         }
+    }
+
+    /**
+     * 解法：迭代
+     * 时间复杂度：O（N）
+     * 空间复杂度：O（1）
+     * @param list1
+     * @param list2
+     * @return
+     */
+    public ListNode mergeTwoLists3(ListNode list1, ListNode list2) {
+        ListNode dummy = new ListNode();
+        ListNode cur = dummy;
+        while (list1 != null && list2 != null) {
+            if (list1.val <= list2.val) {
+                cur.next = list1;
+                list1 = list1.next;
+            } else {
+                cur.next = list2;
+                list2 = list2.next;
+            }
+            cur = cur.next;
+        }
+        if (list1 == null) {
+            cur.next = list2;
+        } else {
+            cur.next = list1;
+        }
+        return dummy.next;
     }
 }
 
