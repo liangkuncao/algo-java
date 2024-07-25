@@ -33,4 +33,31 @@ public class LeetCode0074 {
         }
         return matrix[row];
     }
+
+    /**
+     * 解法：二分
+     * 时间复杂度：O（logMN）
+     * 空间复杂度：O（1）
+     * @param matrix
+     * @param target
+     * @return
+     */
+    public boolean searchMatrix2(int[][] matrix, int target) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int left = 0;
+        int right = m * n - 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            int value = matrix[mid / n][mid % n];
+            if (value < target) {
+                left = mid + 1;
+            } else if (value > target) {
+                right = mid - 1;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
 }
