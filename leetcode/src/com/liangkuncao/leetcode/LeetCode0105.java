@@ -1,83 +1,64 @@
 package com.liangkuncao.leetcode;
 
-import java.util.Deque;
-import java.util.LinkedList;
+import com.liangkuncao.leetcode.common.TreeNode;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LeetCode0105 {
-    int[][] directions = new int[][]{
-            {-1, 0}, {0, 1}, {1, 0}, {0, -1}
-    };
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (preorder == null || preorder.length == 0) {
+            return null;
+        }
 
-    public int maxAreaOfIsland(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-        int result = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                result = Math.max(result, dfs(grid, i, j));
+        TreeNode root = new TreeNode(preorder[0]);
+
+        int rootValue = preorder[0];
+        int leftSize = 0;
+        for (int i = 0; i < inorder.length; i++) {
+            if (inorder[i] == rootValue) {
+                leftSize = i;
+                break;
             }
         }
-        return result;
+        int rightSize = preorder.length - leftSize - 1;
+
+        int[] leftPreorder = new int[leftSize];
+        int[] rightPreorder = new int[rightSize];
+        int[] leftInorder = new int[leftSize];
+        int[] rightInorder = new int[rightSize];
+        System.arraycopy(preorder, 1, leftPreorder, 0, leftSize);
+        System.arraycopy(preorder, leftSize + 1, rightPreorder, 0, rightSize);
+        System.arraycopy(inorder, 0, leftInorder, 0, leftSize);
+        System.arraycopy(inorder, leftSize + 1, rightInorder, 0, rightSize);
+
+        root.left = buildTree(leftPreorder, leftInorder);
+        root.right = buildTree(rightPreorder, rightInorder);
+        return root;
     }
 
-    private int dfs(int[][] grid, int x, int y) {
-        if (x < 0 || x >= grid.length) {
-            return 0;
+    Map<Integer, Integer> map = new HashMap<>();
+    public TreeNode buildTree2(int[] preorder, int[] inorder) {
+        int n = inorder.length;
+        for (int i = 0; i < n; i++) {
+            map.put(inorder[i], i);
         }
-        if (y < 0 || y >= grid[0].length) {
-            return 0;
-        }
-        if (grid[x][y] != 1) {
-            return 0;
-        }
-        grid[x][y] = 2;
-        int result = 1;
-        for (int[] direction : directions) {
-            int newX = x + direction[0];
-            int newY = y + direction[1];
-            result += dfs(grid, newX, newY);
-
-        }
-        return result;
+        return buildTree3(preorder, inorder, 0, n - 1, 0, n - 1);
     }
 
-    public int maxAreaOfIslandStack(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-        int result = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                int cur = dfsStack(grid, i, j);
-                result = Math.max(result, cur);
-            }
+    private TreeNode buildTree3(int[] preorder, int[] inorder, int preorderLeft, int preorderRight, int inorderLeft, int inorderRight) {
+        if (preorderLeft > preorderRight) {
+            return null;
         }
-        return result;
+        TreeNode root = new TreeNode(preorder[preorderLeft]);
+        int rootIndex = map.get(preorder[preorderLeft]);
+        int leftSize = rootIndex - inorderLeft;
+        root.left = buildTree3(preorder, inorder, preorderLeft + 1, preorderLeft + leftSize, inorderLeft, rootIndex - 1);
+        root.right = buildTree3(preorder, inorder, preorderLeft + 1 + leftSize, preorderRight, rootIndex + 1, inorderRight);
+        return root;
     }
 
-    private int dfsStack(int[][] grid, int i, int j) {
-        int cur = 0;
-        Deque<int[]> stack = new LinkedList<>();
-        stack.add(new int[]{i, j});
-        while (!stack.isEmpty()) {
-            int[] position = stack.pop();
-            int x = position[0];
-            int y = position[1];
-            if (x < 0 || x >= grid.length) {
-                continue;
-            }
-            if (y < 0 || y >= grid[0].length) {
-                continue;
-            }
-            if (grid[x][y] != 1) {
-                continue;
-            }
-            cur++;
-            grid[x][y] = 2;
-            for (int[] direction : directions) {
-                int[] newPosition = new int[] {x + direction[0], y + direction[1]};
-                stack.add(newPosition);
-            }
-        }
-        return cur;
+    public static void main(String[] args) {
+
     }
 }
