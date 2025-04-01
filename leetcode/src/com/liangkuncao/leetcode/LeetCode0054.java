@@ -5,6 +5,7 @@ import java.util.List;
 
 public class LeetCode0054 {
     private final static int MARK = 1000;
+    private final static int DIFF = 10000;
 
     /**
      * 时间复杂度：O（N）
@@ -32,6 +33,26 @@ public class LeetCode0054 {
             result.add(matrix[cur[0]][cur[1]]);
             matrix[cur[0]][cur[1]] = MARK;
             cnt--;
+        }
+        return result;
+    }
+
+    public List<Integer> spiralOrder2(int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        int now = 0;
+        int x = 0;
+        int y = -1;
+        List<Integer> result = new ArrayList<>();
+        while (result.size() < m * n) {
+            if (matrix[x][y] < MARK) {
+                now = (now + 1) % 4;
+            }
+            x += directions[now][0];
+            y += directions[now][1];
+            result.add(matrix[x][y]);
+            matrix[x][y] -= DIFF;
         }
         return result;
     }
