@@ -23,4 +23,25 @@ public class LeetCode0067 {
         }
         return result.reverse().toString();
     }
+
+    public String addBinary20250402(String a, String b) {
+        int carry = 0;
+        int aIdx = a.length() - 1;
+        int bIdx = b.length() - 1;
+        StringBuilder result = new StringBuilder();
+        while (aIdx >= 0 || bIdx >= 0) {
+            int aBit = aIdx >= 0 ? a.charAt(aIdx) - '0' : 0;
+            int bBit = bIdx >= 0 ? b.charAt(bIdx) - '0' : 0;
+            int sum = aBit + bBit + carry;
+            carry = sum / 2;
+            int cur = sum % 2;
+            result.insert(0, cur);
+            aIdx--;
+            bIdx--;
+        }
+        if (carry > 0) {
+            result.insert(0, carry);
+        }
+        return result.toString();
+    }
 }
