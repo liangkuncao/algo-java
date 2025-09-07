@@ -15,4 +15,20 @@ public class LeetCode0069 {
         }
         return ans;
     }
+
+    public int mySqrt_0907(int x) {
+        int left = 0;
+        int right = x;
+        int result = x;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (mid * mid <= x) {
+                left = mid + 1;
+                result = mid;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return result;
+    }
 }
